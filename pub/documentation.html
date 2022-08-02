@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Flashcard Library</title>
+    </head>
+    <body>
+        <h1>Flashcard Library: Create intelligent self-shuffling flashcard decks</h1>
+        <ul>
+            <li style="display: inline-block;">
+                <a style="text-decoration: none" href="examples.html">
+                    <div style="background-color: #4CAF50; color: white; padding: 10px">
+                        <span>Examples</span>
+                    </div>
+                </a>
+            </li>
+            <li style="display: inline-block;">
+                <a style="text-decoration: none" href="documentation.html">
+                    <div style="background-color: #008CBA; color: white; padding: 10px">
+                        <span>Documentation</span>
+                    </div>
+                </a>
+            </li>
+            <li style="display: inline-block;">
+                <a
+                        style="text-decoration: none"
+                        href="https://github.com/csc309-winter-2022/js-library-chaud496"
+                >
+                    <div style="background-color: #f44336; color: white; padding: 10px">
+                        <span>GitHub</span>
+                    </div>
+                </a>
+            </li>
+        </ul>
+        <h2 style="text-decoration: underline;">Documentation</h2>
+        <h3>Getting Started</h3>
+        <p>
+            The packaged library can be downloaded from <a href="FlashcardLibrary.zip" download>here</a>.
+            Unzip the file and move the contents of the <code>FlashcardLibrary</code> folder into your project directory.
+        </p>
+        <p>To import the library, first add the following stylesheet:</p>
+        <pre>
+            <code>
+                &lt;link rel="stylesheet" type="text/css" href="examples.css"&gt;
+            </code>
+        </pre>
+        <p>Then import the following scripts (note that this library depends on jQuery):</p>
+        <pre>
+            <code>
+                &lt;script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js">&lt;/script>
+                &lt;script defer type="text/javascript" src='js/flashcardlibrary.js'>&lt;/script>
+            </code>
+        </pre>
+        <p>
+            The <code>FlashcardSet</code> constructor function can be used to create a flashcard deck as follows:
+            <code>const flashcardSet = FlashcardSet("unique-div-id")</code>
+        </p>
+        <p>
+            View the <a href="examples.html">examples</a> page
+            to see more complicated usages of the library.
+        </p>
+        <h3>API Properties and Functions</h3>
+        <p>
+            After creating a <code>FlashcardSet</code> object as described in the <code>Getting Started</code> section,
+            the following functions and properties are accessible from it:
+        </p>
+        <ul>
+            <li>
+                <code>flashcards</code>
+                <br>
+                <br>
+                This property is an array containing all the flashcard objects in the deck
+            </li>
+            <li>
+                <code>divID</code>
+                <br>
+                <br>
+                This property is the id of the div containing the generated flashcard deck DOM element
+            </li>
+            <li>
+                <code>element</code>
+                <br>
+                <br>
+                This property is the div containing the generated flashcard deck DOM element
+            </li>
+            <li>
+                <code>addFlashcard(question, answer)</code>
+                <br>
+                <br>
+                <ul>
+                    <li>
+                        This function takes non-empty string arguments for the question and answer parameters and adds the flashcard to the deck if it doesn’t already exist
+                    </li>
+                    <li>
+                        Returns the id of the new flashcard if it is added to the deck, otherwise -1 for any errors (i.e. empty parameters, duplicate flashcard)
+                    </li>
+                    <li>
+                        If the deck is currently empty, the DOM element is updated to show the newly created flashcard
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <code>removeFlashcard(id)</code>
+                <br>
+                <br>
+                <ul>
+                    <li>
+                        This function takes an integer argument for the id parameter and removes the associated flashcard from the deck if it exists
+                    </li>
+                    <li>
+                        Returns the deleted flashcard object, otherwise an empty object for any errors (i.e. empty flashcard deck, invalid flashcard id)
+                    </li>
+                    <li>
+                        If the deleted flashcard is the currently selected flashcard, the DOM element is updated to show the first flashcard in the deck if it is non-empty; otherwise it changes to the initial empty state
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <code>getFlashcard(id)</code>
+                <br>
+                <br>
+                <ul>
+                    <li>
+                        This function takes an integer argument for the id parameter and returns the associated flashcard from the deck if it exists
+                    </li>
+                    <li>
+                        Returns the flashcard object, otherwise an empty object if the given id is invalid or the deck is empty
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <code>loadFromJSON(jsonArr)</code>
+                <br>
+                <br>
+                <ul>
+                    <li>
+                        This function takes a stringified JSON array of flashcard objects and updates the flashcard deck, deleting any pre-existing flashcards
+                    </li>
+                    <li>
+                        Returns 0 on success, otherwise returns -1 on failure (i.e. argument is not stringified JSON array, JSON array is invalid)
+                    </li>
+                    <li>
+                        Format of JSON array:
+                        <ul>
+                            <li>
+                                [
+                                <br>
+                                &emsp;
+                                {question: String, answer: String, id: Integer, bucket: Integer, turnsPassed: Integer},
+                                <br>
+                                &emsp;
+                                ...
+                                <br>
+                                ]
+                            </li>
+                            <li>
+                                <code>question</code> and <code>answer</code> properties are non-empty strings
+                            </li>
+                            <li>
+                                No flashcards have the same <code>question</code> AND <code>answer</code> properties
+                            </li>
+                            <li>
+                                <code>id</code> property is a positive integer
+                            </li>
+                            <li>
+                                No flashcards have the same <code>id</code> property
+                            </li>
+                            <li>
+                                <code>bucket</code> and <code>turnsPassed</code> properties are positive integers
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <code>writeToJSON()</code>
+                <br>
+                <br>
+                <ul>
+                    <li>
+                        This function returns a stringified JSON array representation of the current flashcard objects in the deck
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <code>changeToggleAddButtonBackgroundColour(c)</code>
+                <br>
+                <br>
+                <ul>
+                    <li>
+                        This function takes a string representation of a colour (i.e. "lightblue", "#F0F", "#FDF5E6", "rgb(255,127,80)")
+                    </li>
+                    <li>
+                        If the specified colour is valid, updates the background colour of the toggle add flashcard form button to it and returns 0
+                    </li>
+                    <li>
+                        Otherwise returns -1
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <code>changeToggleAddButtonTextColour(c)</code>
+                <br>
+                <br>
+                <ul>
+                    <li>
+                        This function takes a string representation of a colour (i.e. "lightblue", "#F0F", "#FDF5E6", "rgb(255,127,80)")
+                    </li>
+                    <li>
+                        If the specified colour is valid, updates the text colour of the toggle add flashcard form button to it and returns 0
+                    </li>
+                    <li>
+                        Otherwise returns -1
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <code>changeDeleteFlashcardButtonBackgroundColour(c)</code>
+                <br>
+                <br>
+                <ul>
+                    <li>
+                        This function takes a string representation of a colour (i.e. "lightblue", "#F0F", "#FDF5E6", "rgb(255,127,80)")
+                    </li>
+                    <li>
+                        If the specified colour is valid, updates the background colour of the delete flashcard button to it and returns 0
+                    </li>
+                    <li>
+                        Otherwise returns -1
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <code>changeDeleteFlashcardButtonTextColour(c)</code>
+                <br>
+                <br>
+                <ul>
+                    <li>
+                        This function takes a string representation of a colour (i.e. "lightblue", "#F0F", "#FDF5E6", "rgb(255,127,80)")
+                    </li>
+                    <li>
+                        If the specified colour is valid, updates the text colour of the delete flashcard button to it and returns 0
+                    </li>
+                    <li>
+                        Otherwise returns -1
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <code>changeCorrectButtonBackgroundColour(c)</code>
+                <br>
+                <br>
+                <ul>
+                    <li>
+                        This function takes a string representation of a colour (i.e. "lightblue", "#F0F", "#FDF5E6", "rgb(255,127,80)")
+                    </li>
+                    <li>
+                        If the specified colour is valid, updates the background colour of the correct guess button to it and returns 0
+                    </li>
+                    <li>
+                        Otherwise returns -1
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <code>changeCorrectButtonTextColour(c)</code>
+                <br>
+                <br>
+                <ul>
+                    <li>
+                        This function takes a string representation of a colour (i.e. "lightblue", "#F0F", "#FDF5E6", "rgb(255,127,80)")
+                    </li>
+                    <li>
+                        If the specified colour is valid, updates the text colour of the correct guess button to it and returns 0
+                    </li>
+                    <li>
+                        Otherwise returns -1
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <code>changeIncorrectButtonBackgroundColour(c)</code>
+                <br>
+                <br>
+                <ul>
+                    <li>
+                        This function takes a string representation of a colour (i.e. "lightblue", "#F0F", "#FDF5E6", "rgb(255,127,80)")
+                    </li>
+                    <li>
+                        If the specified colour is valid, updates the background colour of the incorrect guess button to it and returns 0
+                    </li>
+                    <li>
+                        Otherwise returns -1
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <code>changeIncorrectButtonTextColour(c)</code>
+                <br>
+                <br>
+                <ul>
+                    <li>
+                        This function takes a string representation of a colour (i.e. "lightblue", "#F0F", "#FDF5E6", "rgb(255,127,80)")
+                    </li>
+                    <li>
+                        If the specified colour is valid, updates the text colour of the incorrect guess button to it and returns 0
+                    </li>
+                    <li>
+                        Otherwise returns -1
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <code>changeAddFlashcardButtonBackgroundColour(c)</code>
+                <br>
+                <br>
+                <ul>
+                    <li>
+                        This function takes a string representation of a colour (i.e. "lightblue", "#F0F", "#FDF5E6", "rgb(255,127,80)")
+                    </li>
+                    <li>
+                        If the specified colour is valid, updates the background colour of the add flashcard button to it and returns 0
+                    </li>
+                    <li>
+                        Otherwise returns -1
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <code>changeAddFlashcardButtonTextColour(c)</code>
+                <br>
+                <br>
+                <ul>
+                    <li>
+                        This function takes a string representation of a colour (i.e. "lightblue", "#F0F", "#FDF5E6", "rgb(255,127,80)")
+                    </li>
+                    <li>
+                        If the specified colour is valid, updates the text colour of the add flashcard button to it and returns 0
+                    </li>
+                    <li>
+                        Otherwise returns -1
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <code>changeAnswerContainerBackgroundColour(c)</code>
+                <br>
+                <br>
+                <ul>
+                    <li>
+                        This function takes a string representation of a colour (i.e. "lightblue", "#F0F", "#FDF5E6", "rgb(255,127,80)")
+                    </li>
+                    <li>
+                        If the specified colour is valid, updates the background colour of the answer container div to it and returns 0
+                    </li>
+                    <li>
+                        Otherwise returns -1
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <code>changeAnswerContainerTextColour(c)</code>
+                <br>
+                <br>
+                <ul>
+                    <li>
+                        This function takes a string representation of a colour (i.e. "lightblue", "#F0F", "#FDF5E6", "rgb(255,127,80)")
+                    </li>
+                    <li>
+                        If the specified colour is valid, updates the text colour of the answer container div to it and returns 0
+                    </li>
+                    <li>
+                        Otherwise returns -1
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </body>
+</html>
