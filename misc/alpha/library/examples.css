@@ -1,0 +1,72 @@
+.flashcardContainer {
+    display: inline-block;
+}
+
+.flashcardTopButton {
+    background-color: blue;
+    color: white;
+    width: 100px;
+}
+
+.dropdownMenu {
+    width: 434px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+option {
+    max-width:400px;
+}
+
+.answerContainer {
+    height: 300px;
+    width: 600px;
+    display: flex;
+    border: 1px solid black;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.answer {
+    display: block;
+}
+
+.flashcardBottomButtonContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.correct {
+    background-color: green;
+    color: white;
+    width: 50%;
+}
+
+.incorrect {
+    background-color: red;
+    color: white;
+    width: 50%;
+}
+
+.addFlashcardContainer {
+    display: inline-block;
+}
+
+.newQuestion {
+    width: 450px;
+}
+
+.newAnswer {
+    resize: none;
+    height: 310px;
+    width: 450px;
+}
+
+.addFlashcard {
+    background-color: blue;
+    color: white;
+    width: 100%;
+}

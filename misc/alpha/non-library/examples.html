@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>Flashcard Library</title>
+
+    <link rel="stylesheet" type="text/css" href="examples.css">
+
+    <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script defer type="text/javascript" src='js/flashcardlibrary.js'></script>
+    <script defer type="text/javascript" src='js/examples.js'></script>
+ </head>
+ <body>
+ 	<h1>Example Header</h1>
+     <div>
+        <div style="display: inline-block">
+            <div>
+                <button type="button" onclick="toggleAddFlashcardContainer(event)">Add</button>
+                <select id="dropdownMenu"  onchange="updateSelectedFlashcard(event)">
+                </select>
+                <button type="button" onclick="deleteFlashcard(event)">Delete</button>
+            </div>
+            <div
+                style="height: 300px; width: 600px; display: block; border: 1px solid black;"
+                onclick="toggleAnswerVisibility(event)"
+            >
+                <h3 style="display: block" id="answer">Add a Flashcard</h3>
+            </div>
+            <div>
+                <button type="button" onclick="selectNewFlashcard(event)">Correct</button>
+                <button type="button" onclick="selectNewFlashcard(event)">Incorrect</button>
+            </div>
+        </div>
+        <div id="addFlashcardContainer" style="display: inline-block">
+            <form>
+                <input id="newQuestion" type="text" style="width: 450px;" placeholder="New Flashcard Question">
+                <br>
+                <textarea id="newAnswer" placeholder="New Flashcard Answer" style="resize: none; height: 250px; width: 450px"></textarea>
+                <br>
+                <input type="submit" value="Add Flashcard" onclick="addFlashcard(event)">
+            </form>
+        </div>
+    </div>
+ </body>
+</html>
